@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="playerMove('Head')">Head</button>
+    <button onclick="playerMove('Tail')">Tail</button>
+    <button
+      onclick="
+        remarks = {
+          wins: 0,
+          losses: 0,
+        };
+        score = 0;
+      "
+    >
+      Reset score
+    </button>
+    <script>
+      remarks = JSON.parse(localStorage.getItem("remarks")) || {
+        wins: 0,
+        losses: 0,
+      };
+      function computerMove() {
+        let computerGuess = Math.random();
+        let result = "";
+        //computerGuess < 0.5 ? (result = "Head") : (result = "Tail");
+        if (computerGuess < 0.5) {
+          result = "Head";
+        } else {
+          result = "Tail";
+        }
+        return result;
+      }
+      let score = 0;
+      function playerMove(player) {
+        const result = computerMove();
+        // result === player ? score++ :score--;
+
+        if (result === player) {
+          remarks.wins++;
+          score++;
+        } else {
+          remarks.losses++;
+          score--;
+        }
+        console.log(score);
+        localStorage.setItem("remarks", JSON.stringify(remarks));
+        alert(`Player: ${player}
+Computer: ${result}
+      Wins: ${remarks.wins} | Losses: ${remarks.losses} | Score: ${score}`);
+        return score;
+      }
+
+      //object that determines the score
+    </script>
+  </body>
+</html>
