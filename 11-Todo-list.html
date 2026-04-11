@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="11-todo-list.css" />
+    <title>Arrays and loops</title>
+  </head>
+  <body>
+    <h1>Todo List</h1>
+    <div class="todo-input-grid">
+      <input
+        type="text"
+        class="js-inp1 inp1"
+        placeholder="Todo Name"
+        onkeydown="if (event.key === 'Enter') add();"
+      />
+      <input type="date" class="js-inp2 inp1" />
+      <button class="add" onclick="add()">Add</button>
+
+      <div class="js-todo todo-grid"></div>
+    </div>
+    <script>
+      let todoArray = [
+        // {
+        //   name: "make dinner",
+        //   dueDate: "2022-12-10",
+        // },
+        // {
+        //   name: "do dishes ",
+        //   dueDate: "2022-11-10",
+        // }
+      ];
+      function pAdder() {
+        //render todo list
+        let todoHtml = "";
+        for (let i = 0; i < todoArray.length; i++) {
+          const todoObject = todoArray[i];
+          // const name = todoObject.name;
+          // const dueDate = todoObject.dueDate;
+          const { name, dueDate } = todoObject;
+          const HTMl = `
+          <div class="css-todo">
+            ${i + 1}.&#8201;${name}
+          </div>
+          <div> ${dueDate} </div>
+          <div>
+              <button onclick="todoArray.splice(${i},1); 
+                pAdder();
+              "
+              class= "delete-button">Delete</button> 
+          </div>
+          `;
+          todoHtml += HTMl;
+          document.querySelector(".js-todo").innerHTML = todoHtml;
+        }
+      }
+
+      function add() {
+        let input = document.querySelector(".js-inp1").value;
+
+        //console.log(todoArray);
+        document.querySelector(".js-inp1").value = "";
+        //duedate
+        const dueDateElement = document.querySelector(".js-inp2");
+        const dueDate = dueDateElement.value;
+        todoArray.push({
+          // name:name,
+          // dueDate : dueDate
+          name: input,
+          dueDate,
+        });
+        pAdder();
+      }
+    </script>
+  </body>
+</html>
