@@ -21,16 +21,8 @@
       <div class="js-todo todo-grid"></div>
     </div>
     <script>
-      let todoArray = [
-        // {
-        //   name: "make dinner",
-        //   dueDate: "2022-12-10",
-        // },
-        // {
-        //   name: "do dishes ",
-        //   dueDate: "2022-11-10",
-        // }
-      ];
+      let todoArray = JSON.parse(localStorage.getItem("todos")) || [];
+      pAdder();
       function pAdder() {
         //render todo list
         let todoHtml = "";
@@ -47,13 +39,15 @@
           <div>
               <button onclick="todoArray.splice(${i},1); 
                 pAdder();
+                localStorage.setItem('todos', JSON.stringify(todoArray));
               "
               class= "delete-button">Delete</button> 
           </div>
           `;
           todoHtml += HTMl;
-          document.querySelector(".js-todo").innerHTML = todoHtml;
         }
+
+        document.querySelector(".js-todo").innerHTML = todoHtml;
       }
 
       function add() {
@@ -71,6 +65,8 @@
           dueDate,
         });
         pAdder();
+        let stringed = JSON.stringify(todoArray);
+        localStorage.setItem("todos", stringed);
       }
     </script>
   </body>
